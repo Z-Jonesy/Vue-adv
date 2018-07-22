@@ -5,6 +5,9 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
     mode: 'development',
+    devServer: {
+        historyApiFallback: true
+    },
     entry: {
         app: './src/main.js',
         vendor: ['jquery', 'popper.js', 'bootstrap']
@@ -14,8 +17,7 @@ module.exports = {
         filename: '[name].js'
     },
     module: {
-        rules: [
-            {
+        rules: [{
                 test: /\.vue$/,
                 loader: 'vue-loader',
                 options: {
@@ -55,16 +57,14 @@ module.exports = {
             },
             {
                 test: /\.(png|jpg|jpeg|gif|svg)$/,
-                use: [
-                    {
-                        loader: 'file-loader',
-                        options: {
-                            name: '[name].[ext]?[hash]',
-                            outputPath: 'img/',
-                            publicPath: 'img/'
-                        }
+                use: [{
+                    loader: 'file-loader',
+                    options: {
+                        name: '[name].[ext]?[hash]',
+                        outputPath: 'img/',
+                        publicPath: 'img/'
                     }
-                ]
+                }]
             }
         ]
     },
