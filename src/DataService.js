@@ -23,6 +23,24 @@ export default {
             .catch(console.warn);
     },
 
+    // sign up
+    SignUp({email, password}) {
+        return Axios.post(signUpUrl, {
+            email: email,
+            password: password,
+            returnSecureToken: true
+        })
+            .then(r => r.data)
+            .then(r => {
+                console.log("signup:", r);
+                return r;
+            })
+            .catch(err=>{
+                console.warn(err);
+                return Promise.reject(err.response.data.error.message);
+            });
+    },
+
     // posts
     GetPosts() {
         return Axios.get(FIREBASE_URL + '/blogposts/' + '.json').then(result => {

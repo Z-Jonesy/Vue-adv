@@ -8,7 +8,7 @@
         computed: {
 
                 user() {
-                    return this.$root.$data.user;
+                    return this.$root.$data.user || {};
                 }
             }
     };

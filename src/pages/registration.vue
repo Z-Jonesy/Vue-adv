@@ -56,6 +56,8 @@
 </template>
 
 <script>
+import DataService from "../DataService";
+
 export default {
   name: "registration",
   data() {
@@ -72,8 +74,15 @@ export default {
         if(this.password !== this.password2) {
             this.alerts.push("A két jelszó nem egyezik !!!")
         }
-      this;
-      //debugger;
+
+        DataService.SignUp({ email: this.email, password: this.password })
+            .then(r => {
+            this.$root.setUserMutation(r);
+            this.$router.push({name: "profil"});
+        })
+            .catch(err => {
+            this.alerts.push(err);
+        });
     }
   }
 };
