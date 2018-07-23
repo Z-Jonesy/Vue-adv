@@ -32,7 +32,7 @@
               </div>
               <div class="form-group">
                 <label for="exampleInputPassword1">Jelszó még egyszer</label>
-                <input v-model="password2" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                <input v-model="password2" type="password" class="form-control" id="exampleInputPassword2" placeholder="Password">
               </div>
 
 
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import DataService from "../DataService";
+
 
 export default {
   name: "registration",
@@ -75,9 +75,11 @@ export default {
             this.alerts.push("A két jelszó nem egyezik !!!")
         }
 
-        DataService.SignUp({ email: this.email, password: this.password })
+        this.$root.signUpAction({
+            email: this.email,
+            password: this.password
+        })
             .then(r => {
-            this.$root.setUserMutation(r);
             this.$router.push({name: "profil"});
         })
             .catch(err => {

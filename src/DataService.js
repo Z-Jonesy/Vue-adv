@@ -9,8 +9,8 @@ const signInUrl = `https://www.googleapis.com/identitytoolkit/v3/relyingparty/ve
 
 export default {
     // sign in
-    SignIn({email, password}) {
-        return Axios.post(signInUrl, {
+    Auth({email, password, isSignUp}) {
+        return Axios.post(isSignUp ? signUpUrl : signInUrl, {
                 email: email,
                 password: password,
                 returnSecureToken: true
@@ -18,21 +18,6 @@ export default {
             .then(r => r.data)
             .then(r => {
                 console.log("lognapló:", r);
-                return r;
-            })
-            .catch(console.warn);
-    },
-
-    // sign up
-    SignUp({email, password}) {
-        return Axios.post(signUpUrl, {
-            email: email,
-            password: password,
-            returnSecureToken: true
-        })
-            .then(r => r.data)
-            .then(r => {
-                console.log("signup:", r);
                 return r;
             })
             .catch(err=>{
