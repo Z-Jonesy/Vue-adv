@@ -3,12 +3,13 @@
 </template>
 
 <script>
+
     export default {
         name: "profil",
         computed: {
 
                 user() {
-                    return this.$root.$data.user || {};
+                    return this.$store.state.user || {};
                 }
             }
     };

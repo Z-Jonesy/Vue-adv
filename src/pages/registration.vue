@@ -11,7 +11,7 @@
 
             <div class="col-12 alert alert-danger" role="alert" v-if="alerts.length">
               <ul>
-                <li v-for="a in alerts">{{a}}</li>
+                <li v-for="a in alerts" :key="a">{{a}}</li>
               </ul>
             </div>
 
@@ -56,8 +56,7 @@
 </template>
 
 <script>
-
-
+  import store from '../store';
 export default {
   name: "registration",
   data() {
@@ -65,25 +64,24 @@ export default {
       email: "",
       password: "",
       password2: "",
-        alerts: []
-
+      alerts: []
     };
   },
   methods: {
     registration() {
-        if(this.password !== this.password2) {
-            this.alerts.push("A két jelszó nem egyezik !!!")
-        }
+      if (this.password !== this.password2) {
+        this.alerts.push("A két jelszó nem egyezik !!!");
+      }
 
-        this.$root.signUpAction({
-            email: this.email,
-            password: this.password
+      this.$store.dispatch('signUpAction', {
+          email: this.email,
+          password: this.password
         })
-            .then(r => {
-            this.$router.push({name: "profil"});
+        .then(r => {
+          this.$router.push({ name: "profil" });
         })
-            .catch(err => {
-            this.alerts.push(err);
+        .catch(err => {
+          this.alerts.push(err);
         });
     }
   }

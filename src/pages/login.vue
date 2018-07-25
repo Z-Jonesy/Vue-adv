@@ -55,6 +55,7 @@
 </template>
 
 <script>
+import store from '../store';
 
 export default {
   name: "login",
@@ -64,10 +65,14 @@ export default {
       password: ""
     };
   },
+    mounted() {
+
+      console.log(store);
+    },
 
   methods: {
     login() {
-      this.$root.signInAction({
+      this.$store.dispatch('signInAction',{
           email: this.email,
           password: this.password
       })
