@@ -56,7 +56,7 @@
 </template>
 
 <script>
-  import store from '../store';
+	import store, {TYPES} from '../store';
 export default {
   name: "registration",
   data() {
@@ -73,7 +73,7 @@ export default {
         this.alerts.push("A két jelszó nem egyezik !!!");
       }
 
-      this.$store.dispatch('signUpAction', {
+      this.$store.dispatch(TYPES.actions.signUp, {
           email: this.email,
           password: this.password
         })
