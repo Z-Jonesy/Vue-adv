@@ -9,31 +9,12 @@
                     <div class="row px-lg-5">
                         <div class="card-deck my-5">
                             <div class="row">
-                                <div class="col-12 col-lg-6 my-3" v-for="post in filteredPostCollection">
+                                <div class="col-12 col-lg-6 my-3" v-for="post in postCollection" :key="post.id">
                                     <BlogPostCard :post="post"></BlogPostCard>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- <nav aria-label="Page navigation example" class="col-11 mt-5">
-                            <ul class="pagination">
-                                <li class="page-item">
-                                    <a class="page-link" href="#">Előző</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">1</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">2</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">3</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">Következő</a>
-                                </li>
-                            </ul>
-                        </nav> -->
 
                     </div>
                 </main>
@@ -75,7 +56,7 @@
 <script>
 import BlogPostCard from '../components/BlogPostCard.vue';
 import BlogPostCategories from '../components/BlogPostCategories.vue';
-import DataService from '../DataService';
+import {TYPES} from "../store";
 
 export default {
     components: {
@@ -85,18 +66,28 @@ export default {
 
     data() {
         return {
-            postCollection: [],
+            //postCollection: [],
             filters: {}
         };
     },
 
     created() {
-        DataService.GetPosts().then(posts => {
-            this.postCollection = posts;
-        });
+    	if(this.$store.getters.isLoggedIn) {
+		    return this.$store.dispatch(TYPES.actions.loadPosts)
+        } else {
+    		this.$router.push({name: "login"});
+        }
+
+
+        // DataService.GetPosts().then(posts => {
+        //     this.postCollection = posts;
+        // });
     },
 
     computed: {
+    	postCollection(){
+    	    return this.$store.state.posts;
+        },
         filteredPostCollection() {
             // ha nincs kagetória szűrés, akkor visszaadunk mindent
             if (!this.$route.params.categoryName) {

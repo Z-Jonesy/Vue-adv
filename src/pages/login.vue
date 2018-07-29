@@ -72,13 +72,14 @@ export default {
 
   methods: {
     login() {
-      this.$store.dispatch(TYPES.actions.signIn,{
+      this.$store
+          .dispatch(TYPES.actions.signIn,{
           email: this.email,
           password: this.password
       })
           .then(r => {
               this.$router.push({name: "profil"});
-              //debugger;
+
           });
     }
   }
