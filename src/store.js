@@ -38,7 +38,7 @@ const state = {
         fireBase: 'https://fizu-ace0d.firebaseio.com'
     },
         user: {...emptyUserObject, idToken: localStorage.getItem("idToken")},
-        posts: []
+        posts: JSON.parse(localStorage.getItem("posts")) || []
     };
 
     const actions = {
@@ -96,6 +96,7 @@ const state = {
         },
         [TYPES.mutations.setPosts](state, fbPost){
             state.posts = Object.values(fbPost);
+            localStorage.setItem("posts", JSON.stringify(state.posts));
         }
     };
 
