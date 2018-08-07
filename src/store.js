@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import Axios from "axios";
+import {FIREBASE_URL} from "./DataService";
 
 const apiKey = "AIzaSyA7eft0Dfqn3yemE-L4z2OvND4Fv6kVb8I";
 const emptyUserObject = {
@@ -22,13 +23,20 @@ export const TYPES ={
     signIn: "signIn",
     signUp: "signUp",
       auth: "auth",
-      loadPosts: "loadPosts"
+      loadPosts: "loadPosts",
+	  postContactMessage: "postContactMessage",
+	  postSurveyResponse: "postSurveyResponse",
+	  getSurveyData: "getSurveyData"
   },
   mutations: {
     setUser: "setUser",
       deleteUser: "deleteUser",
       setPosts: "setPosts"
-    }
+    },
+	getters: {
+  	    isLoggedIn: "isLoggedIn",
+		getPost: "getPost"
+	}
 };
 
 const state = {
@@ -42,6 +50,22 @@ const state = {
     };
 
     const actions = {
+    	[TYPES.actions.getSurveyData]({
+	    return Axios.post(
+	        `${state.url.fireBase}/SurveyResponses.json?auth=${state.user.idToken}`
+	    )
+
+
+    }),
+
+    	[TYPES.actions.postSurveyResponse]({state}, surveyPayload){
+		    return Axios.post(
+		    	`${state.url.fireBase}/surveyResponses.json?auth=${state.user.idToken}`, surveyPayload)
+				    .catch(error => {
+				    console.warn(error);
+				    return Promise.reject();
+			        });
+	    },
         [TYPES.actions.signIn]({dispatch}, credentialsPayload) {
             return dispatch(TYPES.actions.auth, {
                 ...credentialsPayload,
@@ -49,7 +73,6 @@ const state = {
             );
 
         },
-
         [TYPES.actions.signUp]({dispatch}, credentialsPayload) {
             return dispatch(TYPES.actions.auth, {
                 ...credentialsPayload,
@@ -82,8 +105,17 @@ const state = {
                     commit(TYPES.mutations.setPosts, r);
 		            return r;
 	        });
-        }
-    };
+
+    },
+	    [TYPES.actions.postContactMessage]( { state }, contactPayload){
+		    return Axios.post(
+		    	`${state.url.fireBase}/contactMessages.json?auth=${state.user.idToken}`
+			    ,contactPayload)
+		            .catch(error => {
+		                console.warn('store contactmessage: ',error);
+		                return Promise.reject();
+		            });
+	    }};
 
     const mutations = {
         [TYPES.mutations.setUser](state, userPayload) {
@@ -101,7 +133,10 @@ const state = {
     };
 
     const getters = {
-        isLoggedIn: state => Boolean(state.user.idToken)
+        [TYPES.getters.isLoggedIn]: state => Boolean(state.user.idToken),
+	    [TYPES.getters.getPost]: state => postId => {
+        	return state.posts.find(p => p.id === postId);
+	    }
     };
 
     export default new Vuex.Store({
