@@ -1,0 +1,18 @@
+{
+  "rules": {
+    ".read": "auth !== null",
+    ".write": "auth !== null",
+    	"blogposts" : {
+        ".read": "auth !== null",
+    		".write": "auth !== null",
+      },
+      "contactMessages" : {
+        ".read": "auth !== null",
+    		".write": true,
+ 	     },
+      "surveyResponses" : {
+        ".read": "auth !== null",
+    		".write": "auth !== null",
+      }
+   }
+}

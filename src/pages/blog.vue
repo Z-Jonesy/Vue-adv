@@ -77,11 +77,6 @@ export default {
         } else {
     		this.$router.push({name: "login"});
         }
-
-
-        // DataService.GetPosts().then(posts => {
-        //     this.postCollection = posts;
-        // });
     },
 
     computed: {
