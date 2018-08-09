@@ -50,14 +50,13 @@ const state = {
     };
 
     const actions = {
-    	[TYPES.actions.getSurveyData]({
-	    return Axios.post(
-	        `${state.url.fireBase}/SurveyResponses.json?auth=${state.user.idToken}`
-	    )
-
-
-    }),
-
+    	[TYPES.actions.getSurveyData]({ state }) {
+	    return Axios.get(
+            `${state.url.fireBase}/SurveyResponses.json?auth=${state.user.idToken}`)
+            .then(result => {
+                return result.data;
+            })
+        },
     	[TYPES.actions.postSurveyResponse]({state}, surveyPayload){
 		    return Axios.post(
 		    	`${state.url.fireBase}/surveyResponses.json?auth=${state.user.idToken}`, surveyPayload)
@@ -106,7 +105,7 @@ const state = {
 		            return r;
 	        });
 
-    },
+        },
 	    [TYPES.actions.postContactMessage]( { state }, contactPayload){
 		    return Axios.post(
 		    	`${state.url.fireBase}/contactMessages.json?auth=${state.user.idToken}`
@@ -115,7 +114,7 @@ const state = {
 		                console.warn('store contactmessage: ',error);
 		                return Promise.reject();
 		            });
-	    }};
+	}};
 
     const mutations = {
         [TYPES.mutations.setUser](state, userPayload) {

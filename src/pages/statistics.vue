@@ -16,7 +16,8 @@
 
 <script>
 // data
-import DataService from '../DataService';
+import { mapActions } from 'vuex';
+import { TYPES } from '../store';
 
 // chart
 import DoughnutChart from '../components/DoughnutChart.vue';
@@ -44,6 +45,8 @@ export default {
     },
 
     computed: {
+        ...mapActions({ loadData: TYPES.actions.getSurveyData }),
+        
         fillJobData() {
             // datasets
             let counts = this.jobs.map(job => {
@@ -120,11 +123,13 @@ export default {
             };
         }
     },
-
+        
+    
     created() {
-        DataService.GetSurveyData().then(result => {
-            this.rawData = Object.values(result);
-        });
+        this.loadData.then(result => {
+        this.rawData = Object.values(result);
+    });
     }
+    
 };
 </script>
