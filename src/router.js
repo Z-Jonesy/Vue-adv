@@ -1,5 +1,6 @@
 // vue router
 import VueRouter from 'vue-router';
+import store, {TYPES} from './store';
 
 // pages
 import index from './pages/index.vue';
@@ -11,6 +12,13 @@ import statistics from "./pages/statistics.vue";
 import login from "./pages/login.vue";
 import registration from "./pages/registration.vue";
 import profile from "./pages/profile.vue";
+
+function ifLoggedIn(to, from, next) {
+	if(!store.getters[TYPES.getters.isLoggedIn]) {
+		next({name: "login"});
+	}
+	next;
+}
 
 // router
 export default new VueRouter({
@@ -29,12 +37,14 @@ export default new VueRouter({
         {
             name: "blogCategory",
             path: "/blog/category/:categoryName",
-            component: blog
+            component: blog,
+            beforeEnter: ifLoggedIn()
         },
         {
             name: "blogPost",
             path: "/blog/post/:postID",
-            component: post
+            component: post,
+	        beforeEnter: ifLoggedIn()
         },
         {
             name: "contact",
@@ -44,12 +54,14 @@ export default new VueRouter({
         {
             name: "survey",
             path: "/survey",
-            component: survey
+            component: survey,
+	        beforeEnter: ifLoggedIn()
         },
         {
             name: "statistics",
             path: "/statistics",
-            component: statistics
+            component: statistics,
+	        beforeEnter: ifLoggedIn()
         },
         {
             name: "login",

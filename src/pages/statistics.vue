@@ -127,8 +127,9 @@ export default {
     
     created() {
         this.loadData.then(result => {
+        	console.log("result -> ",result);
         this.rawData = Object.values(result);
-    });
+     });
     }
     
 };

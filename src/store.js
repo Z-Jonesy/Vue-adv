@@ -52,7 +52,7 @@ const state = {
     const actions = {
     	[TYPES.actions.getSurveyData]({ state }) {
 	    return Axios.get(
-            `${state.url.fireBase}/SurveyResponses.json?auth=${state.user.idToken}`)
+            `${state.url.fireBase}/surveyResponses.json?auth=${state.user.idToken}`)
             .then(result => {
                 return result.data;
             })

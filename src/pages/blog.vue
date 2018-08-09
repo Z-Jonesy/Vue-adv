@@ -72,11 +72,7 @@ export default {
     },
 
     created() {
-    	if(this.$store.getters.isLoggedIn) {
-		    return this.$store.dispatch(TYPES.actions.loadPosts)
-        } else {
-    		this.$router.push({name: "login"});
-        }
+    	return this.$store.dispatch(TYPES.actions.loadPosts)
     },
 
     computed: {
