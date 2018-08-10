@@ -9,7 +9,7 @@
                     <div class="row px-lg-5">
                         <div class="card-deck my-5">
                             <div class="row">
-                                <div class="col-12 col-lg-6 my-3" v-for="post in postCollection" :key="post.id">
+                                <div class="col-12 col-lg-6 my-3" v-for="post in filteredPostCollection" :key="post.id">
                                     <BlogPostCard :post="post"></BlogPostCard>
                                 </div>
                             </div>
@@ -57,6 +57,7 @@
 import BlogPostCard from '../components/BlogPostCard.vue';
 import BlogPostCategories from '../components/BlogPostCategories.vue';
 import {TYPES} from "../store";
+import { mapState } from "vuex";
 
 export default {
     components: {
@@ -76,9 +77,7 @@ export default {
     },
 
     computed: {
-    	postCollection(){
-    	    return this.$store.state.posts;
-        },
+        ...mapState({ postCollection: state => state.posts }),
         filteredPostCollection() {
             // ha nincs kagetória szűrés, akkor visszaadunk mindent
             if (!this.$route.params.categoryName) {

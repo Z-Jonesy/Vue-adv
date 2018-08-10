@@ -78,7 +78,7 @@ export default {
           password: this.password
         })
         .then(r => {
-          this.$router.push({ name: "profil" });
+          this.$router.push({ name: "profile" });
         })
         .catch(err => {
           this.alerts.push(err);

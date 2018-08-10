@@ -5,7 +5,7 @@
 <script>
 
     export default {
-        name: "profil",
+        name: "profile",
         computed: {
 
                 user() {

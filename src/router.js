@@ -13,11 +13,12 @@ import login from "./pages/login.vue";
 import registration from "./pages/registration.vue";
 import profile from "./pages/profile.vue";
 
-function ifLoggedIn(to, from, next) {
-	if(!store.getters[TYPES.getters.isLoggedIn]) {
+function Authenticated(to, from, next) {
+	if(store.getters.isLoggedIn) {
+		next();
+	} else {
 		next({name: "login"});
-	}
-	next;
+    }
 }
 
 // router
@@ -38,13 +39,13 @@ export default new VueRouter({
             name: "blogCategory",
             path: "/blog/category/:categoryName",
             component: blog,
-            beforeEnter: ifLoggedIn()
+            beforeEnter: Authenticated
         },
         {
             name: "blogPost",
             path: "/blog/post/:postID",
             component: post,
-	        beforeEnter: ifLoggedIn()
+	        beforeEnter: Authenticated
         },
         {
             name: "contact",
@@ -55,13 +56,13 @@ export default new VueRouter({
             name: "survey",
             path: "/survey",
             component: survey,
-	        beforeEnter: ifLoggedIn()
+	        beforeEnter: Authenticated
         },
         {
             name: "statistics",
             path: "/statistics",
             component: statistics,
-	        beforeEnter: ifLoggedIn()
+	        beforeEnter: Authenticated
         },
         {
             name: "login",
@@ -74,8 +75,8 @@ export default new VueRouter({
             component: registration
         },
         {
-            name: "profil",
-            path: "/profil",
+            name: "profile",
+            path: "/profile",
             component: profile
         }
 
