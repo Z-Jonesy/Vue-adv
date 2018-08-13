@@ -18,47 +18,84 @@
           </router-link>
         </li>
 
-        <!-- <li class="nav-item px-3">
-          <a class="nav-link" href="kedvenc-stat.html">
-            Kedvenc statisztikáink
-          </a>
-        </li> -->
-        
-        <!-- <li class="nav-item px-3">
-          <a class="nav-link" href="kerdoivek.html">
-            Kérdőívek
-            </a>
-        </li>
-        
-        <li class="nav-item px-3">
-          <a class="nav-link" href="rolunk.html">
-            Rólunk
-          </a>
-        </li>
-
-        <li class="nav-item dropdown mr-5 ml-3">
-          <a class="nav-link dropdown-toggle btn-group mr-5" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">Profil</a>
-          <div class="dropdown-menu  text-right" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="profilom.html">Profilom</a>
-            <a class="dropdown-item" href="terkep.html">Fizu-térkép</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Kijelentkezés</a>
-          </div>
-        </li> -->
+      
       </ul>
     </div>
   </nav>
 </template>
 
 <script>
-import navItems from '../navItems';
+import {mapGetters} from "vuex";
+import {TYPES} from "../store";
 
 export default {
-    data() {
-        return {
-            itemCollection: navItems
-        };
+  computed: {
+    ...mapGetters({ isLoggedIn: TYPES.getters.isLoggedIn}),
+    itemCollection() {
+      if(this.isLoggedIn) {
+        return [
+        ...this.baseNav,
+              {
+                  name: "Profile",
+                  id: "profile",
+                  path: "/profile"
+              }
+         ]
+         } else {
+        return [
+        ...this.baseNav,
+          {
+                  name: "Login",
+                  id: "login",
+                  path: "/login"
+              },
+
+              {
+                  name: "Sign Up",
+                  id: "registr ation",
+                  path: "/registration"
+              }
+        ]
+      }
     }
+  },
+  
+  data() {
+        return {
+            baseNav: [
+              {
+                  name: "Főoldal",
+                  id: "index",
+                  path: "/"
+              },
+
+              {
+                  name: "Blog",
+                  id: "blog",
+                  path: "/blog"
+              },
+
+              {
+                  name: "Kérdőív",
+                  id: "survey",
+                  path: "/survey"
+              },
+
+              {
+                  name: "Fizu térkép",
+                  id: "statistics",
+                  path: "/statistics"
+              },
+
+              {
+                  name: "Kapcsolat",
+                  id: "contact",
+                  path: "/contact"
+              }
+
+             
+            ]
+      };
+  }
 };
 </script>
