@@ -17,7 +17,10 @@
             {{ item.name }}
           </router-link>
         </li>
-
+        <li class="nav-item px-3"
+        v-if="this.isLoggedIn">
+          <a class="nav-link" href="#" @click.prevent="logOut">Logout</a>
+        </li>
       
       </ul>
     </div>
@@ -25,10 +28,17 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import {mapGetters, mapMutations} from "vuex";
 import {TYPES} from "../store";
 
 export default {
+  methods: {
+    ...mapMutations([TYPES.mutations.deleteUser]),
+    logOut(){
+      this.deleteUser();
+      this.$router.push("/");
+    }
+  },
   computed: {
     ...mapGetters({ isLoggedIn: TYPES.getters.isLoggedIn}),
     itemCollection() {

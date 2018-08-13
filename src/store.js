@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import Axios from "axios";
-import {FIREBASE_URL} from "./DataService";
+
 
 const apiKey = "AIzaSyA7eft0Dfqn3yemE-L4z2OvND4Fv6kVb8I";
 const emptyUserObject = {
