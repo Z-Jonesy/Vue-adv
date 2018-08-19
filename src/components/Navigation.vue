@@ -62,7 +62,7 @@ export default {
 
               {
                   name: "Sign Up",
-                  id: "registr ation",
+                  id: "registration",
                   path: "/registration"
               }
         ]
